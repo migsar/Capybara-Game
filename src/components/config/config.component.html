@@ -1,0 +1,38 @@
+
+<div class="w-full max-w-lg mx-auto p-8 bg-white/80 backdrop-blur-sm rounded-2xl shadow-lg border border-white">
+  <h2 class="text-3xl font-bold text-center text-amber-800 mb-6">{{ translationService.t('settings')() }}</h2>
+
+  <div class="mb-6">
+    <label class="block text-lg font-medium text-amber-700 mb-2">{{ translationService.t('language')() }}</label>
+    <div class="flex justify-center space-x-4">
+      @for (lang of languages; track lang.code) {
+        <button (click)="setLanguage(lang.code)"
+                [class]="'p-4 rounded-lg text-4xl transition-transform transform hover:scale-110 ' + (selectedLanguage() === lang.code ? 'bg-amber-200 ring-4 ring-amber-400' : 'bg-amber-100')">
+          {{ lang.flag }}
+        </button>
+      }
+    </div>
+  </div>
+
+  <div class="mb-6">
+    <label for="prompt" class="block text-lg font-medium text-amber-700 mb-2">{{ translationService.t('questionPrompt')() }}</label>
+    <textarea id="prompt" 
+              [ngModel]="prompt()" (ngModelChange)="prompt.set($event)"
+              rows="3"
+              class="w-full p-3 border border-amber-300 rounded-lg shadow-inner focus:ring-2 focus:ring-amber-500 focus:outline-none bg-white/50"
+              [placeholder]="translationService.t('promptPlaceholder')()"></textarea>
+  </div>
+  
+  <div class="mb-8">
+    <label class="flex items-center space-x-3 cursor-pointer">
+      <input type="checkbox" 
+             [ngModel]="questionsEnabled()" (ngModelChange)="questionsEnabled.set($event)"
+             class="h-5 w-5 rounded border-gray-300 text-orange-500 focus:ring-orange-500">
+      <span class="text-lg font-medium text-amber-700">{{ translationService.t('enableQuestions')() }}</span>
+    </label>
+  </div>
+
+  <button (click)="save()" class="w-full bg-orange-500 hover:bg-orange-600 text-white font-bold text-xl py-4 px-4 rounded-lg shadow-md transform hover:scale-105 transition-transform duration-200">
+    {{ translationService.t('saveAndStart')() }}
+  </button>
+</div>
